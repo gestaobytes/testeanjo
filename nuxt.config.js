@@ -28,6 +28,16 @@ export default {
 
   components: true,
 
+  generate: {
+    async routes () {
+      let response = await axios.get('https://api.ogirassol.gestaobytes.com/api/v1/public/all-posts-all-time')
+      return response.data.map(post => ({
+        route: `${post.slugCategory}/${post.slug}`,
+        payload: post
+      }))
+    }
+  },
+
   buildModules: [
     '@nuxtjs/vuetify',
   ],

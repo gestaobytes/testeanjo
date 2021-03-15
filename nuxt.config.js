@@ -1,4 +1,5 @@
 import colors from 'vuetify/es5/util/colors'
+import axios from 'axios'
 
 export default {
   target: 'static',
@@ -29,14 +30,31 @@ export default {
   components: true,
 
   generate: {
-    async routes () {
-      let response = await axios.get('https://api.ogirassol.gestaobytes.com/api/v1/public/all-posts-all-time')
+    async routes() {
+      let response = await axios.get('http://poptvnews.local/api/v1/public/all-posts-all-time')
       return response.data.map(post => ({
-        route: `${post.slugCategory}/${post.slug}`,
+        route: `${post.category}/${post.slug}`,
         payload: post
       }))
-    }
+    },
   },
+
+
+//   generate: {
+//     routes: () => {
+//         return axios.get('http://poptvnews.local/api/v1/public/all-posts-all-time').then((res) => {
+//             return res.data.map((post) => {
+//                 return {
+//                   // route: 'blog/' + post.slug,
+//                     route: `${post.category}/${post.slug}`,
+//                     payload: post
+//                 }
+//             })
+//         })
+//     }
+// },
+
+
 
   buildModules: [
     '@nuxtjs/vuetify',
@@ -48,7 +66,7 @@ export default {
   ],
 
   axios: {
-    baseURL: 'https://api.ogirassol.gestaobytes.com/api/v1'
+    baseURL: 'http://poptvnews.local/api/v1'
   },
 
   // auth: {
